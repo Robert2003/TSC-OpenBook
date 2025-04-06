@@ -1,7 +1,7 @@
 # README - OpenBook
 
 ## Diagrama bloc
-
+![Diagrama](Images/Diagrama.png "Diagrama")
 ---
 
 ## Funcționalitatea hardware
