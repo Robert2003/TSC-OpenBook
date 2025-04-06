@@ -324,7 +324,7 @@ Source: http://www.osram.convergy.de/ ... Lb_q993.pdf</description>
 <wire x1="-0.6" y1="-1.45" x2="-0.6" y2="1.45" width="0.2" layer="21"/>
 <wire x1="-1.85" y1="1.5" x2="-0.95" y2="1.5" width="0.2" layer="21"/>
 </package>
-<package name="FH34SRJ24S05SH99" library_version="56">
+<package name="FH34SRJ24S05SH99" library_version="57">
 <description>&lt;b&gt;FH34SRJ-24S-0.5SH(99)-4&lt;/b&gt;&lt;br&gt;
 </description>
 <smd name="1" x="5.75" y="1.45" dx="0.8" dy="0.3" layer="1" rot="R90"/>
@@ -4257,8 +4257,6 @@ Source: www.farnell.com/datasheets/49238.pdf</description>
 <mfgpreviewcolor name="substratecolor" color="0xFF786E46"/>
 </mfgpreviewcolors>
 <errors>
-<approved hash="4,1,ac67a0cfc69d588d"/>
-<approved hash="4,1,ebdab3e1d1d3e47e"/>
 <approved hash="4,1,e3da73e111d4067e"/>
 <approved hash="4,1,6067accfc69a7a8d"/>
 </errors>
