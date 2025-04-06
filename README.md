@@ -1,93 +1,83 @@
-#  README - Proiect ESP32-C6
+# README - OpenBook
 
-##  Diagrama bloc
+## Diagrama bloc
 
 ---
 
-##  Funcționalitatea hardware
+## Funcționalitatea hardware
 
-###  Microcontroller principal
-- **ESP32-C6-WROOM-1-N8**
+### Microcontroller principal
+- ESP32-C6-WROOM-1-N8
   - Procesor RISC-V 32-bit
   - Conectivitate Wi-Fi 6 și Bluetooth 5.0
-  - 8MB Flash
-  - Alimentare: 3.3V
-  - Niveluri logice: 3.3V
+  - 8MB Flash (intern)
+  - Alimentare 3.3V
+  - Niveluri logice 3.3V
 
-###  Componente periferice și interfețe
+### Componente periferice și interfețe
 
-| Componentă          | Interfață        | Descriere                                                                 |
-|---------------------|------------------|--------------------------------------------------------------------------|
-| Ecran EPD (e-paper) | SPI + GPIO       | Conectat pe SPI (MOSI, MISO, SCK, SS) și GPIO pentru controlul BUSY, RST, DC, CS |
-| Memorie Flash externă | SPI            | FLASH_CS pe IO12                                                         |
-| Interfață USB        | GPIO             | USB_D-, USB_D+ pe IO13, IO14                                             |
-| RTC (Real Time Clock) | GPIO + I2C     | INT_RTC, 32KHz, I2C_PW, RTC_RST                                          |
-| Senzori I2C (ex: temperatură, umiditate) | I2C     | SDA (IO19), SCL (IO20)                                                  |
+| Componentă                      | Ref. Schematică | Interfață    | Pini ESP32 Utilizați / Descriere                                        |
+| :------------------------------ | :-------------- | :----------- | :---------------------------------------------------------------------- |
+| Ecran EPD (e-paper)             | J4              | SPI + GPIO   | SPI (IO7, IO27, IO6), CS (IO11), DC (IO5), RST (IO21), BUSY (IO26)      |
+| Slot Card MicroSD               | J3              | SPI          | SPI (IO7=MOSI/DI, IO27=MISO/DO, IO6=SCK), CS (IO10)                       |
+| Interfață USB                   | J2              | USB Native   | D- (IO13), D+ (IO14) via protecție ESD (D2)                             |
+| RTC (Real Time Clock)           | IC2             | I2C          | SDA (IO19), SCL (IO20); Include Supercap (C10) pentru backup           |
+| Senzor Temp/Umid/Pres/Gaz (BME) | IC3             | I2C          | SDA (IO19), SCL (IO20)                                                  |
+| Încărcător Li-Po                | IC1             | Power        | MCP73831; Indicator LED încărcare (D4)                                  |
+| Regulator LDO 3.3V              | IC4             | Power        | XC6220A331MR-G                                                          |
+| Circuit Reset / Supraveghere    | IC5             | Power/Control| BD5229G-TR                                                              |
+| Buton BOOT                      | SW1             | GPIO         | Conectat la IO8                                                         |
+| Buton RESET                     | SW2             | Reset        | Conectat la linia RESET                                                 |
+| MOSFET comutare EPD Power       | Q1, Q2          | Control      | Comută alimentarea 3V3_EPD                                              |
 
 #### SPI (Serial Peripheral Interface)
-- MOSI (Master Out Slave In): IO7  
-- MISO (Master In Slave Out): IO27  
-- SCK (Serial Clock): IO6  
-- SS (Slave Select - pentru card SD): IO4  
-- EPD_CS (select ecran e-paper): IO11  
-- FLASH_CS (select memorie flash): IO12  
-- EPD_DC, EPD_BUSY, EPD_RST: semnale de control pentru ecran
+- **Utilizat pentru EPD și Card SD.**
+- **MOSI** (Master Out Slave In): **IO7**
+- **MISO** (Master In Slave Out): **IO27**
+- **SCK** (Serial Clock): **IO6**
+- **SS / CS** (Slave Select / Chip Select):
+    - **EPD_CS**: **IO11**
+    - **SD_CS**: **IO10**
 
-#### I2C
-- SDA: IO19  
-- SCL: IO20
+#### I2C (Inter-Integrated Circuit)
+- **Utilizat pentru RTC (IC2) și Senzor BME (IC3).**
+- **SDA** (Serial Data): **IO19**
+- **SCL** (Serial Clock): **IO20**
 
-#### UART
-- TX: IO25  
-- RX: IO24
+#### GPIO (General Purpose Input/Output) & Alți Pini
+- **EPD_DC** (Data/Command): **IO5**
+- **EPD_RST** (Reset): **IO21**
+- **EPD_BUSY**: **IO26**
+- **USB_D-**: **IO13**
+- **USB_D+**: **IO14**
+- **BOOT_PIN**: **IO8**
+- **RESET_PIN**: **IO3**
+- **EN** (Enable): Conectat la 3.3V
 
-#### Altele:
-- IO/BOOT: conectat la GPIO8, cu rezistor de pull-up de 10kΩ  
-- EN (Enable): conectat la 3.3V  
-- RESET: IO3  
-- Pini USB: IO13 (USB-), IO14 (USB+)
+## Detaliere Pini Utilizați (ESP32-C6 / U2)
 
----
-
-##  Specificații de comunicație și procesare
-
-- **SPI**: Viteză configurabilă până la 80 MHz, folosit pentru transfer rapid între MCU și e-paper sau memorie externă.  
-- **I2C**: Operare tipică la 400 kHz (Fast Mode), permite conectarea la mai mulți senzori cu adresare unică.  
-- **UART**: Pentru debug și upload de firmware, conectat la IO24 și IO25.
-
----
-
-##  Calcul estimativ consum de energie
-
-| Modul               | Consum estimat  |
-|---------------------|-----------------|
-| ESP32-C6 activ       | ~80-160 mA (WiFi activ) |
-| E-paper             | ~5-15 mA în update |
-| RTC                 | <1 µA în standby |
-| Senzori I2C         | 1-10 mA/senzor  |
-
-Pe baza acestor valori, se poate estima un consum mediu de 100-200 mA în funcționare activă și sub 1 mA în mod sleep profund.
-
----
-
-##  Detalierea pinilor ESP32-C6
-
-| Pin ESP32-C6 | Funcție             | Motivare utilizare                            |
-|--------------|---------------------|-----------------------------------------------|
-| IO7          | SPI MOSI            | Transfer date către ecran / memorie externă   |
-| IO27         | SPI MISO            | Date de la ecran (dacă suportă)               |
-| IO6          | SPI CLK             | Clock SPI                                      |
-| IO4          | SPI CS (SD)         | Select card SD                                 |
-| IO11         | SPI CS (e-paper)    | Select ecran e-paper                           |
-| IO12         | SPI CS (FLASH)      | Select memorie externă                         |
-| IO5          | EPD_DC              | Control date/command ecran                     |
-| IO26         | EPD_BUSY            | Semnal ocupat e-paper                          |
-| IO21         | EPD_RST             | Reset e-paper                                  |
-| IO19         | SDA (I2C)           | Comunicare cu senzori                          |
-| IO20         | SCL (I2C)           | Comunicare cu senzori                          |
-| IO24, IO25   | RX/TX               | UART pentru debug                              |
-| IO13, IO14   | USB- / USB+         | Conectivitate USB                              |
-| IO8          | GPIO / Boot         | Buton pentru bootloader                        |
+| Pin ESP32 | Funcție Principală                  | Componentă Conectată / Scop                  |
+| :-------- | :---------------------------------- | :------------------------------------------- |
+| IO3       | RESET                               | SW2, IC5                                     |
+| IO5       | GPIO                                | J4 (EPD_DC)                                  |
+| IO6       | SPI SCK                             | J4 (EPD_SCK), J3 (SD_CLK)                    |
+| IO7       | SPI MOSI                            | J4 (EPD_DIN), J3 (SD_DI)                     |
+| IO8       | BOOT                                | SW1 (Buton Boot)                             |
+| IO10      | GPIO / SPI CS                       | J3 (SD_CS)                                   |
+| IO11      | GPIO / SPI CS                       | J4 (EPD_CS)                                  |
+| IO13      | USB D-                              | J2 (USB-C D-) via D2                         |
+| IO14      | USB D+                              | J2 (USB-C D+) via D2                         |
+| IO19      | I2C SDA                             | IC2 (RTC SDA), IC3 (BME SDA/SDO)             |
+| IO20      | I2C SCL                             | IC2 (RTC SCL), IC3 (BME SCL/SCK)             |
+| IO21      | GPIO                                | J4 (EPD_RST)                                 |
+| IO26      | GPIO                                | J4 (EPD_BUSY)                                |
+| IO27      | SPI MISO                            | J4 (EPD_DOUT), J3 (SD_DO)                    |
+| EN        | Enable                              | Pull-up la 3.3V                              |
+| VDD       | Power                               | 3.3V                                         |
+| GND       | Ground                              | Ground                                       |
+| IO12      | Neutilizat                          | -                                            |
+| IO24      | Neutilizat                          | -                                            |
+| IO25      | Neutilizat                          | -                                            |
 
 ---
 
