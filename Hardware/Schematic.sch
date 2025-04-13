@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="no" active="no"/>
@@ -2490,7 +2490,7 @@ We carry &lt;a href=”https://www.sparkfun.com/products/14204”&gt;200mm&lt;/a
 <part name="EPD_C8" library="DeskAssistant v19 v1" library_urn="urn:adsk.wipprod:fs.file:vf.QwFj3SzAQTmJBbbHAlSUAQ" deviceset="EAGLE-LTSPICE_C" device="C0402" value="1uF/50V"/>
 <part name="EPD_C7" library="DeskAssistant v19 v1" library_urn="urn:adsk.wipprod:fs.file:vf.QwFj3SzAQTmJBbbHAlSUAQ" deviceset="EAGLE-LTSPICE_C" device="C0402" value="1uF/50V"/>
 <part name="EPD_C6" library="DeskAssistant v19 v1" library_urn="urn:adsk.wipprod:fs.file:vf.QwFj3SzAQTmJBbbHAlSUAQ" deviceset="EAGLE-LTSPICE_C" device="C0402" value="1uF/50V"/>
-<part name="EPD_C5" library="DeskAssistant v19 v1" library_urn="urn:adsk.wipprod:fs.file:vf.QwFj3SzAQTmJBbbHAlSUAQ" deviceset="EAGLE-LTSPICE_C" device="C0402" value="1uF/50V"/>
+<part name="EPD_C5" library="DeskAssistant v19 v1" library_urn="urn:adsk.wipprod:fs.file:vf.QwFj3SzAQTmJBbbHAlSUAQ" deviceset="EAGLE-LTSPICE_C" device="C0402" value="0.1uF/50V"/>
 <part name="SUPPLY27" library="DeskAssistant v19 v1" library_urn="urn:adsk.wipprod:fs.file:vf.QwFj3SzAQTmJBbbHAlSUAQ" deviceset="GND-BAR" device="" value="GND"/>
 <part name="SUPPLY28" library="DeskAssistant v19 v1" library_urn="urn:adsk.wipprod:fs.file:vf.QwFj3SzAQTmJBbbHAlSUAQ" deviceset="GND-BAR" device="" value="GND"/>
 <part name="SUPPLY29" library="DeskAssistant v19 v1" library_urn="urn:adsk.wipprod:fs.file:vf.QwFj3SzAQTmJBbbHAlSUAQ" deviceset="GND-BAR" device="" value="GND"/>
@@ -2640,6 +2640,9 @@ Boot / IO Button</text>
 <wire x1="252.73" y1="-199.39" x2="252.73" y2="-157.48" width="0.1524" layer="97"/>
 <text x="171.45" y="-162.56" size="3.81" layer="97">SPI ESD Protection Lines</text>
 <text x="254" y="-162.56" size="3.81" layer="97">External NORFlash64MB</text>
+<text x="162.56" y="7.62" size="1.778" layer="95">DMG2305UX-7</text>
+<text x="85.09" y="-106.68" size="1.778" layer="95" rot="R90">DMG2305UX-7</text>
+<text x="308.61" y="-203.2" size="2.413" layer="94">drawn by: Robert Damian</text>
 </plain>
 <instances>
 <instance part="J2" gate="G$1" x="5.08" y="5.08" smashed="yes">
@@ -2700,8 +2703,8 @@ Boot / IO Button</text>
 <attribute name="NAME" x="145.796" y="5.334" size="2.54" layer="95" align="top-left"/>
 </instance>
 <instance part="Q1" gate="G$1" x="157.48" y="10.16" smashed="yes">
-<attribute name="NAME" x="162.56" y="10.16" size="1.778" layer="95" font="vector"/>
-<attribute name="VALUE" x="162.56" y="7.62" size="1.778" layer="96" font="vector"/>
+<attribute name="NAME" x="162.56" y="12.7" size="1.778" layer="95" font="vector"/>
+<attribute name="VALUE" x="162.56" y="10.16" size="1.778" layer="96" font="vector"/>
 </instance>
 <instance part="R1_PWRUSB" gate="G$1" x="139.7" y="-2.54" smashed="yes" rot="R90">
 <attribute name="NAME" x="138.2014" y="-6.35" size="1.778" layer="95" rot="R90"/>
@@ -2947,7 +2950,7 @@ Boot / IO Button</text>
 </instance>
 <instance part="Q2" gate="G$1" x="77.47" y="-104.14" smashed="yes">
 <attribute name="NAME" x="82.55" y="-106.68" size="1.778" layer="95" font="vector" rot="R90"/>
-<attribute name="VALUE" x="85.09" y="-106.68" size="1.778" layer="96" font="vector" rot="R90"/>
+<attribute name="VALUE" x="87.63" y="-106.68" size="1.778" layer="96" font="vector" rot="R90"/>
 </instance>
 <instance part="SENSOR2" gate="G$1" x="119.38" y="-105.41" smashed="yes">
 <attribute name="NAME" x="109.2107" y="-92.19" size="2.186390625" layer="95"/>
@@ -3028,8 +3031,8 @@ Boot / IO Button</text>
 <attribute name="VALUE" x="247.904" y="-115.57" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
 </instance>
 <instance part="C6" gate="G$1" x="254" y="-114.3" smashed="yes">
-<attribute name="NAME" x="139.319" y="502.666" size="1.778" layer="95" rot="R270"/>
-<attribute name="VALUE" x="256.794" y="-112.649" size="1.778" layer="96" rot="R270"/>
+<attribute name="NAME" x="251.079" y="-116.586" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="258.699" y="-119.126" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="SUPPLY43" gate="G$1" x="247.65" y="-125.73" smashed="yes">
 <attribute name="VALUE" x="247.65" y="-127.635" size="1.778" layer="96" align="center"/>
@@ -3708,7 +3711,7 @@ Boot / IO Button</text>
 <wire x1="142.24" y1="7.62" x2="139.7" y2="7.62" width="0.1524" layer="91"/>
 <wire x1="139.7" y1="7.62" x2="139.7" y2="13.97" width="0.1524" layer="91"/>
 <wire x1="139.7" y1="2.54" x2="139.7" y2="7.62" width="0.1524" layer="91"/>
-<label x="139.7" y="10.16" size="1.27" layer="95" rot="R90" xref="yes"/>
+<label x="139.7" y="13.97" size="1.27" layer="95" rot="R90" xref="yes"/>
 <junction x="142.24" y="7.62"/>
 <junction x="139.7" y="7.62"/>
 <pinref part="D2" gate="G$0" pin="ANODE"/>
